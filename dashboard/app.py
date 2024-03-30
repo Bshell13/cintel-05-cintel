@@ -1,25 +1,54 @@
-from collections import deque
+from datetime import datetime
+import random
+from shiny import reactive, render
+from shiny.express import ui
+from faicons import icon_svg
 
-# Creating a deque
-fib = deque([1, 1, 2, 3, 5, 8, 13, 21, 34, 55])
 
-# Appending data to deque
-fib.append(89) # Adding to the right
-print(fib)
+# --------------------------------------------
+# SET UP THE REACIVE CONTENT
+# --------------------------------------------
 
-# Remove data from deque
-fib.popleft() # Removing from the left
-print(fib)
+# --------------------------------------------
+# PLANNING: We want to get a fake temperature and 
+# Time stamp every N seconds. 
+# For now, we'll avoid storage and just 
+# Try to get the fake live data working and sketch our app. 
+# We can do all that with one reactive calc.
+# Use constants for update interval so it's easy to modify.
+# ---------------------------------------------------------
 
-length_of_fib = len(fib)
-fib.clear() # Removes everything from deque
+# --------------------------------------------
+# First, set a constant UPDATE INTERVAL for all live data
+# Constants are usually defined in uppercase letters
+# Use a type hint to make it clear that it's an integer (: int)
+# --------------------------------------------
+UPDATE_INTERVAL_SECS: int = 1
+# --------------------------------------------
 
-# Using max length for deque
-fib_2 = deque([1, 1, 2, 3], maxlen=5)
+# Initialize a REACTIVE CALC that our display components can call
+# to get the latest data and display it.
+# The calculation is invalidated every UPDATE_INTERVAL_SECS
+# to trigger updates.
 
-# Simulate updataing the sequence with new values
-fib_2.append(fib_2[-1]+fib_2[-2])
-print(fib_2)
+# It returns everything needed to display the data.
+# Very easy to expand or modify.
+# (I originally looked at REACTIVE POLL, but this seems to work better.)
+# --------------------------------------------
 
-fib_2.append(fib_2[-1]+fib_2[-2])
-print(fib_2)
+@reactive.calc()
+def reactive_calc_combined():
+
+    # Invalidate this calculation every UPDATE_INTERVAL_SECS to trigger updates
+    reactive.invalidate_later(UPDATE_INTERVAL_SECS)
+
+    # Data generation logic. Get random between -18 and -16 C, rounded to 1 decimal place
+    temp = round(random.uniform(-18, -16), 1)
+
+    # Get a timestamp for "now" and use string format strftime() method to format it
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    latest_dictionary_entry = {"temp": temp, "timestamp": timestamp}
+
+    # Return everything we need
+    return latest_dictionary_entry
