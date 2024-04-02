@@ -93,7 +93,7 @@ def display_temp():
 
 ui.p("warmer than usual")
 
-icon_svg("sun")
+icon_svg("cloud")
 
 ui.hr()
 
