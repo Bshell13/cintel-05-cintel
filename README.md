@@ -15,4 +15,6 @@ py -m pip install "libraries to install"
 py -m pip freeze > requirements.txt
 ```
 #### List of External Libraries
-None so far.
+-  faicons
+-  shiny
+-  shinylive
