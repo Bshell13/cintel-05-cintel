@@ -18,3 +18,17 @@ py -m pip freeze > requirements.txt
 -  faicons
 -  shiny
 -  shinylive
+
+### Running Locally
+```shell
+shiny run --reload --launch-browser dashboard/app.py
+```
+
+### After Making Changes, Export to Docs Folder
+Export to docs folder and test GitHub Pages locally
+
+```shell
+shiny static-assets remove
+shinylive export dashboard docs
+py -m http.server --directory docs --bind localhost 8008
+```
