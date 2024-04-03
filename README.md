@@ -24,6 +24,7 @@ List of External Libraries
 -  shiny
 -  shinylive
 -  shinyswatch
+-  shinywidgets
 
 ### Running Locally
 Running the app locally for quick updates.
