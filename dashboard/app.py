@@ -49,7 +49,7 @@ DEQUE_SIZE: int = 8
 reactive_value_wrapper = reactive.value(deque(maxlen=DEQUE_SIZE))
 
 
-ui.page_opts(title="PyShiny Express: Live Data Example", fillable=True)
+ui.page_opts(title="Shellenberger PyShiny Live Data", fillable=True)
 
 theme.darkly()
 
